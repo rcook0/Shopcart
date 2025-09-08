@@ -1,0 +1,12 @@
+flowchart TD
+  A[Browse Catalog] --> B[View Product Details]
+  B --> C[Add to Cart]
+  C --> D[Review Cart]
+  D -->|Remove/Update Items| D
+  D --> E[Proceed to Checkout]
+  E --> F[Enter Payment & Shipping Info]
+  F --> G[Process Payment]
+  G -->|Approved| H[Create Order]
+  G -->|Declined| I[Prompt Correction: name, address, card info]
+  H --> J[Order Fulfillment Begins]
+  J --> K[Shipping / Confirmation Email]
