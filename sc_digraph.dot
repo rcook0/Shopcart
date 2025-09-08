@@ -1,0 +1,19 @@
+digraph ShoppingCart {
+  rankdir=LR;
+  node [shape=box, style=rounded];
+
+  UserApp -> CatalogService;
+  CatalogService -> ProductService;
+
+  UserApp -> CartService;
+  CartService -> ProductService;
+
+  UserApp -> CheckoutService;
+  CheckoutService -> OrderService;
+  CheckoutService -> PaymentService;
+
+  PaymentService -> BankGateway;
+  OrderService -> FulfillmentService;
+  FulfillmentService -> ShippingService;
+  OrderService -> NotificationService;
+}
