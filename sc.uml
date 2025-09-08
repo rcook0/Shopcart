@@ -1,0 +1,52 @@
+@startuml
+class User {
+  +id: UUID
+  +name: String
+  +email: String
+  +address: String
+}
+
+class Product {
+  +id: UUID
+  +name: String
+  +description: String
+  +price: Decimal
+  +stock: Integer
+}
+
+class Cart {
+  +id: UUID
+  +user_id: UUID
+  +created_at: DateTime
+}
+
+class CartItem {
+  +id: UUID
+  +cart_id: UUID
+  +product_id: UUID
+  +quantity: Integer
+}
+
+class Order {
+  +id: UUID
+  +cart_id: UUID
+  +status: String
+  +total: Decimal
+  +created_at: DateTime
+}
+
+class Payment {
+  +id: UUID
+  +order_id: UUID
+  +amount: Decimal
+  +status: String
+  +method: String
+  +transaction_id: String
+}
+
+User "1" --> "1" Cart : owns
+Cart "1" --> "0..*" CartItem : contains
+Product "1" --> "0..*" CartItem : referenced by
+Cart "1" --> "0..1" Order : checkout
+Order "1" --> "0..1" Payment : paid with
+@enduml
