@@ -15,3 +15,39 @@ instantly approved, otherwise the order is subject to modification of one or mor
 the name, address, card number, expiry date and card type used by the purchaser.
 In accordance with the terms and conditions of sale, the process of fulfillment
 of the order then begins.
+
+Architecture:
+
+Split into CatalogService, CartService, OrderService, PaymentService, FulfillmentService, NotificationService.
+
+Event-driven: after PaymentService confirms, an event (order.paid) is published → consumed by FulfillmentService and NotificationService.
+
+APIs (REST-ish):
+
+GET /products, GET /products/{id}
+
+POST /carts/{id}/items
+
+DELETE /carts/{id}/items/{itemId}
+
+POST /checkout (cart → order)
+
+POST /payments
+
+Events:
+
+order.created, order.paid, order.shipped
+
+Payloads in JSON with order_id, user_id, timestamp.
+
+Infra & NFRs:
+
+PostgreSQL or cloud-managed DB with transactional integrity (cart + order + payment).
+
+Caching for product catalog (Redis).
+
+Payment via PCI-compliant third-party gateway (Stripe, Adyen, etc.).
+
+Observability: logs, metrics, distributed tracing.
+
+Horizontal scaling for stateless services (Cart, Catalog, Checkout).
