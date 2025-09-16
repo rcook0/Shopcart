@@ -1,4 +1,4 @@
-digraph ShoppingCart {
+digraph Store {
   rankdir=LR;
   node [shape=box, style=rounded];
 
@@ -10,10 +10,11 @@ digraph ShoppingCart {
 
   UserApp -> CheckoutService;
   CheckoutService -> OrderService;
-  CheckoutService -> PaymentService;
-
+  OrderService -> PaymentService;
   PaymentService -> BankGateway;
+
   OrderService -> FulfillmentService;
+  FulfillmentService -> InventoryService;
   FulfillmentService -> ShippingService;
   OrderService -> NotificationService;
 }
