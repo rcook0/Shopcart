@@ -44,9 +44,17 @@ class Payment {
   +transaction_id: String
 }
 
-User "1" --> "1" Cart : owns
-Cart "1" --> "0..*" CartItem : contains
-Product "1" --> "0..*" CartItem : referenced by
-Cart "1" --> "0..1" Order : checkout
-Order "1" --> "0..1" Payment : paid with
+class Fulfillment {
+  +id: UUID
+  +order_id: UUID
+  +status: String
+  +shipped_at: DateTime
+}
+
+User "1" --> "1" Cart
+Cart "1" --> "0..*" CartItem
+Product "1" --> "0..*" CartItem
+Cart "1" --> "0..1" Order
+Order "1" --> "0..1" Payment
+Order "1" --> "0..1" Fulfillment
 @enduml
